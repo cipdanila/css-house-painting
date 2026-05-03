@@ -30,7 +30,7 @@ A digital artwork created entirely with semantic HTML and advanced CSS, featurin
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com
+   git clone https://github.com/cipdanila/css-house-painting.git
    ```
 2. Open `index.html` in your favorite browser.
 
