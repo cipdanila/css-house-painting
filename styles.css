@@ -1,0 +1,220 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+
+    background-image: 
+        /* clouds on the sky */
+        radial-gradient(circle at 15% 20%, white 30px, transparent 60px),
+        radial-gradient(circle at 18% 22%, white 35px, transparent 65px),
+        radial-gradient(circle at 75% 15%, rgb(231, 231, 142) 30px, transparent 60px),
+        
+        /* grass */
+        linear-gradient(110deg, transparent 45%, rgba(224, 224, 119, 0.15) 50%, transparent 55%),
+        linear-gradient(70deg, transparent 45%, rgba(0, 50, 0, 0.15) 50%, transparent 55%),
+
+        /* basic */
+        linear-gradient(to bottom, 
+            #b3e6ff 0%, 
+            #b3e6ff 60%, 
+            #32cd32 60%, 
+            #228B22 100% 
+        );
+
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, no-repeat;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 20px 40%, 20px 40%, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 100%, 0 100%, 0 0;
+}
+
+
+#house {
+    flex: 0 0 auto;
+    width: 500px;
+    height: 400px;
+    position: relative;
+    background-color: #F5F5DC; /* Brown color for the house */
+    border: 2px solid #D2B48C; /* Optional: Add a border to the house */
+}
+
+#chimney {
+    position: absolute;
+    width: 75px;
+    height: 100px;
+    top: -100px; /* Position the chimney above the roof */
+    left: 95%;
+    background: repeating-linear-gradient(
+        to bottom,
+        #b22222,
+        #b22222 20px,
+        #D3D3D3 20px, 
+        #D3D3D3 22px); /* Brick pattern for the chimney */
+    border: 2px solid #8B0000; /* Optional: Add a border to the chimney */
+    transform: translate(-120px); /* Adjust the chimney position to align with the roof */
+    z-index: -1; /* Ensure the chimney is above the roof */
+}
+
+.smoke {
+    position: absolute;
+    top: -20px; /* Start above the chimney */
+    left: 20px; /* Center the smoke above the chimney */
+    width: 40px;
+    height: 20px;
+    background-color: rgba(200, 200, 200, 0.6); /* Semi-transparent gray for smoke */
+    border-radius: 50%; /* Make the smoke circular */
+    opacity: 0; /* Start invisible */
+    animation: rise 3s infinite linear; /* Animate the smoke rising */
+}
+
+/* Keyframes for the smoke animation */
+@keyframes rise {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8; /* Make the smoke more visible at the midpoint */
+    }   
+    100% {        
+        transform: translateY(-100px) scale(2); /* Move the smoke up and make it larger */
+        opacity: 0; /* Fade out the smoke as it rises */
+    }
+}
+
+/* Add multiple smoke puffs with different animation delays for a more natural effect */
+.smoke1 {
+    animation-delay: 0s; /* Start immediately */
+}
+
+.smoke2 {
+    animation-delay: 1s; /* Start with a delay */
+}
+
+.smoke3 {
+    animation-delay: 2s; /* Start with a delay */
+}
+
+#roof {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 150px;
+    background-color: #d2691e;
+    border: 2px solid #8b4513; 
+    background-image: 
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 15px),
+        repeating-linear-gradient(-45deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 15px),
+        linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.2));
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: translateY(-100%);
+    z-index: 3;
+}
+
+.window-hole, .door-hole {
+    position: absolute;
+    background-color: #1a1a1a; /* Match the house color for the holes */
+    overflow: visible; /* Ensure the holes are visible */
+}
+
+#window-1-hole {
+    top: 15%;
+    left: 7.5%;
+    width: 100px;
+    height: 120px;
+    border: 3px solid #b35900;
+}
+
+#window-2-hole {
+    top: 15%;
+    right: 7.5%;
+    width: 100px;
+    height: 120px;
+    border: 3px solid #b35900;
+}
+
+#window-1, #window-2 {
+    position: relative;
+    width: 100px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: 
+    /* Horizontal window pane */
+    linear-gradient(to bottom, transparent 48%, #b35900 48%, #b35900 52%, transparent 52%),
+    /* Vertical window pane */
+    linear-gradient(to right, transparent 48%, #b35900 48%, #b35900 52%, transparent 52%),
+    /* Reflection */
+    linear-gradient(135deg, #87CEEB 0%, #87CEEB 50%, #add8e6 50%, #add8e6 100%);
+    transition: transform 0.8s ease; /* Smooth transition for the window animation */
+    transform-origin: top; /* Set the transform origin to the top for a flipping effect */
+    z-index: 5; /* Ensure the windows are above the house and roof */
+}
+
+#window-1:hover, #window-2:hover {
+    transform: perspective(800px) rotateX(70deg); /* Rotate the windows on hover to create a flipping effect */
+}
+
+.door-hole {
+    bottom: 0;
+    left: 176px;
+    width: 130px;
+    height: 180px;
+    background-color: #000;
+}
+
+#door {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #CC5500; 
+    border: 6px solid #b35900; 
+    left: 0; 
+    bottom: 0;
+    transform-origin: left;
+    transition: transform 0.8s ease;
+    box-sizing: border-box; 
+}
+
+#door:hover {
+    transform: perspective(1000px) rotateY(-80deg);
+}
+
+#door::after {
+    content: ""; /* Create a pseudo-element for the doorknob */
+    position: absolute;
+    top: 50%; 
+    right: 10px; 
+    width: 8px;
+    height: 8px;
+    background-color: #FFD700; /* Golden color for the doorknob */
+    border: 1px solid #B8860B; 
+    border-radius: 50%; /* Make the doorknob circular */
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add a subtle shadow to the doorknob for depth */
+}
+
+#welcome {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    width: 130px;
+    height: 40px;
+    position: absolute;
+    bottom: -47px;
+    left: 48%;
+    z-index: 1;
+    background-color: #858585; /* Gray color for the welcome text background */
+    border: 2px solid #b35900; /* Optional: Add a border to the welcome text */
+    transform: skewX(-20deg) translateX(-50%); /* Skew the welcome text and center it */
+    color: #8B4513; /* Saddle Brown color for the welcome text */
+    text-shadow: 1px 1px 2px #D2B48C; /* Add a subtle shadow to the text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
