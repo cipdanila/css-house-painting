@@ -1,0 +1,30 @@
+name: CSS Linting and Quality Check
+
+# Declanșează workflow-ul la fiecare push pe branch-ul main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  stylelint:
+    name: Run Stylelint
+    runs-on: ubuntu-latest
+
+    steps:
+      # Pasul 1: Descarcă codul din repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Pasul 2: Instalează Node.js (necesar pentru uneltele de linting)
+      - name: Setup Node.js
+        uses: actions/checkout@v4
+        with:
+          node-version: '20'
+
+      # Pasul 3: Rulează verificarea (Stylelint)
+      # Folosim o acțiune predefinită pentru a găsi erori comune în CSS
+      - name: Lint CSS
+        run: |
+          npx stylelint "**/*.css" --formatter verbose
