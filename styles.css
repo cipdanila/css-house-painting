@@ -350,3 +350,33 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+/* ==========================================================================
+   Accessibility: prefers-reduced-motion Mitigation Matrix
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    /* 1. Stop the continuous particle animation of the chimney smoke */
+    .smoke {
+        animation: none;
+        opacity: 0.4; /* Keep a static, subtle puff visible instead of movement */
+    }
+
+    /* 2. Disable the sharp 3D tilting/swinging motions on hover state triggers */
+    #window-1:hover, #window-2:hover {
+        transform: none; /* Windows stay static on hover */
+    }
+
+    #door:hover {
+        transform: none; /* Door remains closed to prevent spatial movement */
+    }
+
+    /* 3. Switch the dynamic environment cycle from a sliding transition to an instant snap */
+    .state-checkbox ~ .sky,
+    .theme-switcher,
+    .switcher-icon,
+    #scene-container::after,
+    #house,
+    #door {
+        transition: none !important; /* Instantly changes colors without visual sliding/fading motion */
+    }
+}
