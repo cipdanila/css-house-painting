@@ -1,4 +1,35 @@
-html {
+/* ==========================================================================
+   Design Tokens & Traditional Moldavian Palette (Bojdeuca Theme)
+   ========================================================================== */
+:root {
+    /* Environment design tokens */
+    --sky-blue: #b3e6ff;
+    --grass-light: #32cd32;
+    --grass-dark: #228b22;
+    --smoke-gray: rgba(210, 210, 210, 0.4);
+    
+    /* Architectural tokens */
+    --wall-clay: #fcfaf2;       /* Warm traditional white clay paint */
+    --wall-border: #e3dec3;
+    --roof-clay: #a0522d;       /* Authentic clay shingle color */
+    --roof-border: #5c2e16;
+    --wood-frame: #703d1b;      /* Dark old oak wood structural beams */
+    --wood-door: #8b4513;
+    --knob-gold: #ffd700;
+    --stone-gray: #7a7a7a;
+
+    /* City Skyline inspired window tones */
+    --window-day-glass: #87ceeb;
+    --window-day-reflect: #add8e6;
+    --window-night-glow: #ffcf33;
+    --window-night-bright: #ffff99;
+    
+    --font-stack: Arial, sans-serif;
+    --text-light: #ffffff;
+}
+
+/* Global border-box reset architecture */
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -10,95 +41,174 @@ body {
     align-items: center;
     height: 100vh;
     overflow: hidden;
-
-    background-image: 
-        /* clouds on the sky */
-        radial-gradient(circle at 15% 20%, white 30px, transparent 60px),
-        radial-gradient(circle at 18% 22%, white 35px, transparent 65px),
-        radial-gradient(circle at 75% 15%, rgb(231, 231, 142) 30px, transparent 60px),
-        
-        /* grass */
-        linear-gradient(110deg, transparent 45%, rgba(224, 224, 119, 0.15) 50%, transparent 55%),
-        linear-gradient(70deg, transparent 45%, rgba(0, 50, 0, 0.15) 50%, transparent 55%),
-
-        /* basic */
-        linear-gradient(to bottom, 
-            #b3e6ff 0%, 
-            #b3e6ff 60%, 
-            #32cd32 60%, 
-            #228B22 100% 
-        );
-
-    background-repeat: no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, no-repeat;
-    background-size: 100% 100%, 100% 100%, 100% 100%, 20px 40%, 20px 40%, 100% 100%;
-    background-position: 0 0, 0 0, 0 0, 0 100%, 0 100%, 0 0;
+    background-color: #090d1a; /* Absolute background viewport boundary */
 }
 
+/* The viewport matrix mimicking the City Skyline framing */
+#scene-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+/* ==========================================================================
+   State Controller & Theme Switcher (No-JS Checkbox Logic)
+   ========================================================================== */
+/* Hide the structural utility checkbox input */
+.state-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Premium Floating Theme Switcher Button placed in top right corner */
+.theme-switcher {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(15, 45, 30, 0.05);
+    border: 2px solid var(--wood-frame);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Icon graphic that morphs based on selected environmental mode */
+.switcher-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #ffcf33; 
+    box-shadow: 0 0 15px #ffcf33; /* Glowing Sun by default */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   ☀️ Default State Engine (Unchecked = DAY Mode Configuration)
+   ========================================================================== */
+.state-checkbox ~ .sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(closest-corner circle at 15% 15%, #ffcf33, #ffcf33 20%, #ffff66 21%, #bbeeff 100%);
+    transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.state-checkbox ~ #house #window-1, 
+.state-checkbox ~ #house #window-2 {
+    background: 
+        linear-gradient(to bottom, transparent 48%, var(--wood-frame) 48%, var(--wood-frame) 52%, transparent 52%),
+        linear-gradient(to right, transparent 48%, var(--wood-frame) 48%, var(--wood-frame) 52%, transparent 52%),
+        linear-gradient(135deg, var(--window-day-glass) 0%, var(--window-day-glass) 50%, var(--window-day-reflect) 50%, var(--window-day-reflect) 100%);
+}
+
+/* ==========================================================================
+   🌙 Trigger State Changes (Checked = NIGHT Mode Configuration)
+   ========================================================================== */
+/* Morph the floating icon into a clean crescent Moon shape using shadow offsets */
+.state-checkbox:checked ~ .theme-switcher {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.state-checkbox:checked ~ .theme-switcher .switcher-icon {
+    background-color: transparent;
+    box-shadow: -8px -6px 0 0 #e6e6e6; 
+}
+
+/* Swapping day gradients for procedural midnight sky and star clusters */
+.state-checkbox:checked ~ .sky {
+    background: 
+        radial-gradient(circle at 30% 25%, #ffffff 1px, transparent 1px),
+        radial-gradient(circle at 65% 10%, #ffffff 1.5px, transparent 2px),
+        radial-gradient(circle at 85% 30%, #ffffff 1px, transparent 1px),
+        radial-gradient(closest-corner circle at 15% 15%, #e6e6e6, #e6e6e6 18%, #cccccc 20%, #1a2a6c 21%, #050814 100%);
+}
+
+/* Activate dark shading filter over the house frame layers */
+.state-checkbox:checked ~ #house {
+    filter: brightness(80%);
+}
+
+/* Light up the window matrices like a City Skyline skyscraper */
+.state-checkbox:checked ~ #house #window-1, 
+.state-checkbox:checked ~ #house #window-2 {
+    background: 
+        linear-gradient(to bottom, transparent 48%, var(--wood-frame) 48%, var(--wood-frame) 52%, transparent 52%),
+        linear-gradient(to right, transparent 48%, var(--wood-frame) 48%, var(--wood-frame) 52%, transparent 52%),
+        linear-gradient(135deg, var(--window-night-glow) 0%, var(--window-night-glow) 40%, var(--window-night-bright) 100%);
+    box-shadow: 0 0 25px rgba(255, 207, 51, 0.45);
+}
+
+/* Light up the window interior frame only when night mode is active and windows open */
+.state-checkbox:checked ~ #house #window-1-hole:hover,
+.state-checkbox:checked ~ #house #window-2-hole:hover,
+.state-checkbox:checked ~ #house #window-1-hole:has(#window-1:hover),
+.state-checkbox:checked ~ #house #window-2-hole:has(#window-2:hover) {
+    background: radial-gradient(circle at center, var(--window-night-bright) 0%, var(--window-night-glow) 100%);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* When night mode is active AND user hovers over the door, light up the interior and cast a glow */
+.state-checkbox:checked ~ #house .door-hole:hover,
+.state-checkbox:checked ~ #house .door-hole:has(#door:hover) {
+    background-color: var(--window-night-glow);
+    /* Creates a realistic golden light beam spill onto the grass outside */
+    box-shadow: 
+        0 0 30px var(--window-night-glow),
+        -40px 20px 50px rgba(255, 207, 51, 0.6); 
+}
+
+/* ==========================================================================
+   Environmental After-Effects (Grass Transitions)
+   ========================================================================== */
+#scene-container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    z-index: -1;
+    background-image: 
+        linear-gradient(110deg, transparent 45%, rgba(224, 224, 119, 0.1) 50%, transparent 55%),
+        linear-gradient(70deg, transparent 45%, rgba(0, 50, 0, 0.1) 50%, transparent 55%),
+        linear-gradient(to bottom, var(--grass-light) 0%, var(--grass-dark) 100%);
+    background-repeat: repeat-x, repeat-x, no-repeat;
+    background-size: 20px 100%, 20px 100%, 100% 100%;
+    transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dim the grass field concurrently with checked activation triggers */
+.state-checkbox:checked ~ #scene-container::after {
+    filter: brightness(45%) saturate(70%);
+}
+
+/* ==========================================================================
+   Structural Main House Components
+   ========================================================================== */
 #house {
-    flex: 0 0 auto;
     width: 500px;
     height: 400px;
     position: relative;
-    background-color: #F5F5DC; /* Brown color for the house */
-    border: 2px solid #D2B48C; /* Optional: Add a border to the house */
-}
-
-#chimney {
-    position: absolute;
-    width: 75px;
-    height: 100px;
-    top: -100px; /* Position the chimney above the roof */
-    left: 95%;
-    background: repeating-linear-gradient(
-        to bottom,
-        #b22222,
-        #b22222 20px,
-        #D3D3D3 20px, 
-        #D3D3D3 22px); /* Brick pattern for the chimney */
-    border: 2px solid #8B0000; /* Optional: Add a border to the chimney */
-    transform: translate(-120px); /* Adjust the chimney position to align with the roof */
-    z-index: -1; /* Ensure the chimney is above the roof */
-}
-
-.smoke {
-    position: absolute;
-    top: -20px; /* Start above the chimney */
-    left: 20px; /* Center the smoke above the chimney */
-    width: 40px;
-    height: 20px;
-    background-color: rgba(200, 200, 200, 0.6); /* Semi-transparent gray for smoke */
-    border-radius: 50%; /* Make the smoke circular */
-    opacity: 0; /* Start invisible */
-    animation: rise 3s infinite linear; /* Animate the smoke rising */
-}
-
-/* Keyframes for the smoke animation */
-@keyframes rise {
-    0% {
-        transform: translateY(0) scale(0.5);
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.8; /* Make the smoke more visible at the midpoint */
-    }   
-    100% {        
-        transform: translateY(-100px) scale(2); /* Move the smoke up and make it larger */
-        opacity: 0; /* Fade out the smoke as it rises */
-    }
-}
-
-/* Add multiple smoke puffs with different animation delays for a more natural effect */
-.smoke1 {
-    animation-delay: 0s; /* Start immediately */
-}
-
-.smoke2 {
-    animation-delay: 1s; /* Start with a delay */
-}
-
-.smoke3 {
-    animation-delay: 2s; /* Start with a delay */
+    background-color: var(--wall-clay);
+    border: 3px solid var(--wall-border);
+    margin-top: 100px; /* Offset pushing the house base below the grass threshold */
+    transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #roof {
@@ -107,38 +217,63 @@ body {
     left: 0;
     width: 500px;
     height: 150px;
-    background-color: #d2691e;
-    border: 2px solid #8b4513; 
+    background-color: var(--roof-clay);
+    border: 2px solid var(--roof-border); 
     background-image: 
-        repeating-linear-gradient(45deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 15px),
-        repeating-linear-gradient(-45deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 15px),
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 15px),
+        repeating-linear-gradient(-45deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 15px),
         linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.2));
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     transform: translateY(-100%);
     z-index: 3;
 }
 
-.window-hole, .door-hole {
+/* ==========================================================================
+   Chimney & Particle Smoke Engine
+   ========================================================================== */
+#chimney {
     position: absolute;
-    background-color: #1a1a1a; /* Match the house color for the holes */
-    overflow: visible; /* Ensure the holes are visible */
+    width: 75px;
+    height: 100px;
+    top: -100px; 
+    left: 95%;
+    background: repeating-linear-gradient(to bottom, #b22222, #b22222 20px, #d3d3d3 20px, #d3d3d3 22px); 
+    border: 2px solid #8b0000; transform: translate(-120px); z-index: -1; 
 }
 
-#window-1-hole {
-    top: 15%;
-    left: 7.5%;
-    width: 100px;
-    height: 120px;
-    border: 3px solid #b35900;
+.smoke {
+    position: absolute;
+    top: -20px; 
+    left: 20px; 
+    width: 40px;
+    height: 20px;
+    background-color: var(--smoke-gray); 
+    border-radius: 50%; 
+    opacity: 0; 
+    animation: rise 3s infinite linear; 
 }
 
-#window-2-hole {
-    top: 15%;
-    right: 7.5%;
-    width: 100px;
-    height: 120px;
-    border: 3px solid #b35900;
+@keyframes rise {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    20% { opacity: 0.8; }   
+    100% { transform: translateY(-120px) scale(2.2); opacity: 0; }
 }
+
+.smoke1 { animation-delay: 0s; }
+.smoke2 { animation-delay: 1s; }
+.smoke3 { animation-delay: 2s; }
+
+/* ==========================================================================
+   Voxel Openings: Windows & Door 3D Mechanics
+   ========================================================================== */
+.window-hole {
+    position: absolute;
+    background-color: #1a1a1a; 
+    overflow: visible; 
+}
+
+#window-1-hole { top: 15%; left: 7.5%; width: 100px; height: 120px; border: 3px solid var(--wood-frame); }
+#window-2-hole { top: 15%; right: 7.5%; width: 100px; height: 120px; border: 3px solid var(--wood-frame); }
 
 #window-1, #window-2 {
     position: relative;
@@ -146,74 +281,71 @@ body {
     height: 100%;
     top: 0;
     left: 0;
-    background: 
-    /* Horizontal window pane */
-    linear-gradient(to bottom, transparent 48%, #b35900 48%, #b35900 52%, transparent 52%),
-    /* Vertical window pane */
-    linear-gradient(to right, transparent 48%, #b35900 48%, #b35900 52%, transparent 52%),
-    /* Reflection */
-    linear-gradient(135deg, #87CEEB 0%, #87CEEB 50%, #add8e6 50%, #add8e6 100%);
-    transition: transform 0.8s ease; /* Smooth transition for the window animation */
-    transform-origin: top; /* Set the transform origin to the top for a flipping effect */
-    z-index: 5; /* Ensure the windows are above the house and roof */
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+    transform-origin: top; 
+    z-index: 5; 
 }
 
 #window-1:hover, #window-2:hover {
-    transform: perspective(800px) rotateX(70deg); /* Rotate the windows on hover to create a flipping effect */
+    transform: perspective(800px) rotateX(72deg); 
 }
 
 .door-hole {
+    position: absolute;
     bottom: 0;
-    left: 176px;
+    left: 185px; 
     width: 130px;
     height: 180px;
     background-color: #000;
+    transition: background-color 0.4s ease;
 }
 
 #door {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #CC5500; 
-    border: 6px solid #b35900; 
-    left: 0; 
-    bottom: 0;
+    background-color: var(--wood-door); 
+    border: 6px solid var(--wood-frame); 
     transform-origin: left;
-    transition: transform 0.8s ease;
-    box-sizing: border-box; 
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #door:hover {
-    transform: perspective(1000px) rotateY(-80deg);
+    transform: perspective(1000px) rotateY(-82deg);
 }
 
 #door::after {
-    content: ""; /* Create a pseudo-element for the doorknob */
+    content: ""; 
     position: absolute;
     top: 50%; 
-    right: 10px; 
-    width: 8px;
-    height: 8px;
-    background-color: #FFD700; /* Golden color for the doorknob */
-    border: 1px solid #B8860B; 
-    border-radius: 50%; /* Make the doorknob circular */
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add a subtle shadow to the doorknob for depth */
+    right: 12px; 
+    width: 10px;
+    height: 10px;
+    background-color: var(--knob-gold); 
+    border: 1px solid #b8860b; 
+    border-radius: 50%; 
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
 }
 
+/* ==========================================================================
+   Decorative Text Elements
+   ========================================================================== */
 #welcome {
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-stack);
     font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
     width: 130px;
-    height: 40px;
+    height: 38px;
     position: absolute;
-    bottom: -47px;
+    bottom: -43px;
     left: 48%;
     z-index: 1;
-    background-color: #858585; /* Gray color for the welcome text background */
-    border: 2px solid #b35900; /* Optional: Add a border to the welcome text */
-    transform: skewX(-20deg) translateX(-50%); /* Skew the welcome text and center it */
-    color: #8B4513; /* Saddle Brown color for the welcome text */
-    text-shadow: 1px 1px 2px #D2B48C; /* Add a subtle shadow to the text */
+    background-color: var(--stone-gray); 
+    border: 2px solid var(--wood-frame); 
+    transform: skewX(-20deg) translateX(-50%); 
+    color: var(--text-light); 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
     display: flex;
     align-items: center;
     justify-content: center;

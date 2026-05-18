@@ -3,27 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House Painting</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Bojdeuca Ticau — Interactive CSS Painting</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div id="house">
-        <div id="chimney">
-            <div class="smoke smoke1"></div>
-            <div class="smoke smoke2"></div>
-            <div class="smoke smoke3"></div>
+    <!-- Main graphic viewport engine -->
+    <main id="scene-container">
+        
+        <!-- The Invisible Controller for Day/Night State Switch -->
+        <input type="checkbox" id="environment-toggle" class="state-checkbox" checked>
+        
+        <!-- Interactive Theme Switcher Button (Sun/Moon Toggle) -->
+        <label for="environment-toggle" class="theme-switcher" aria-label="Toggle between Day and Night mode">
+            <span class="switcher-icon"></span>
+        </label>
+        
+        <!-- Sky container hosting the radial gradients -->
+        <div class="sky"></div>
+        
+        <div id="house">
+            <div id="chimney">
+                <div class="smoke smoke1"></div>
+                <div class="smoke smoke2"></div>
+                <div class="smoke smoke3"></div>
+            </div>
+            <div id="roof"></div>
+            <div class="window-hole" id="window-1-hole">
+                <div id="window-1"></div>
+            </div>
+            <div class="window-hole" id="window-2-hole">
+                <div id="window-2"></div>
+            </div>
+            <div class="door-hole">
+                <div id="door"></div>
+            </div>
+            <div id="welcome" aria-hidden="true">TICAU</div>
         </div>
-        <div id="roof"></div>
-        <div class="window-hole" id="window-1-hole">
-            <div id="window-1"></div>
-        </div>
-        <div class="window-hole" id="window-2-hole">
-            <div id="window-2"></div>
-        </div>
-        <div class="door-hole">
-            <div id="door"></div>
-        </div>
-        <div id="welcome">WELCOME</div>
-    </div>
+    </main>
 </body>
 </html>

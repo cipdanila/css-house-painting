@@ -1,30 +1,32 @@
-# Interactive CSS House Painting 🏠
+# Interactive CSS House Painting (Bojdeuca Ticau Edition) 🏠
 
-A digital artwork created entirely with semantic HTML and advanced CSS, featuring interactive 3D animations and procedural environment textures.
+A digital artwork created entirely with semantic HTML and advanced CSS, featuring interactive 3D animations, procedural environment textures, and a dynamic ecosystem switcher. This project merges design mechanics from the **City Skyline** curriculum with traditional architectural elements inspired by Ion Creangă's historical cottage in Ticău, Iași.
 
 ## 🚀 Features
 
-- **Interactive Elements:** 
-  - **Windows:** Tilt-open effect (X-axis rotation) simulating a top-hinged window.
-  - **Door:** 3D swinging animation (Y-axis rotation) with a golden doorknob.
-  - **Interior Shadows:** Dark "containers" behind openings simulate room depth when interactive elements are activated.
-- **Procedural Textures:**
-  - **Cloudscape:** Irregular, soft-edged clouds built using overlapping radial gradients.
-  - **Lush Grass:** Multi-layered gradients with yellow/green highlights for a textured meadow look.
-  - **Brickwork:** Repeating linear gradients on the chimney for a realistic masonry effect.
-  - **Shingles:** Shingle-textured roof created using `clip-path` and intersecting gradients.
-- **Dynamic Smoke:** Animated smoke puffs rising from the chimney using CSS keyframes and staggered delays.
+*   **Interactive 3D Elements & Light Physics:**
+    *   **Windows:** Tilt-open effect (X-axis rotation) simulating a top-hinged window layout.
+    *   **Door:** 3D swinging animation (Y-axis rotation) complete with a golden doorknob layer.
+    *   **Dynamic Interiors:** Integrated advanced hover triggers (`:has()`). Openings reveal a dark vacancy during daytime, but dynamically spill a warm golden radial light gradient and cast external beams onto the grass when opened at night.
+*   **City Skyline Integrated Day/Night Engine:**
+    *   **Pure CSS Environment Switcher:** Driven entirely by a No-JS checkbox hack (`.state-checkbox ~ .sky`). Clicking the celestial button transitions the entire scene fluidly over a 0.8s bezier curve.
+    *   **Morphic Icon Switcher:** The toggle controller dynamically changes from a glowing golden Sun into a sharp silver crescent Moon using precise shadow offsets (`box-shadow`).
+    *   **Procedural Atmospheres:** Swaps a custom, vibrant daytime sunburst layout for a midnight blue starfield generated using overlapping micro-radial gradients directly in the stylesheet.
+*   **Procedural Textures:**
+    *   **Lush Meadow:** Multi-layered grass gradients with variable brightness filters that dim automatically when night falls.
+    *   **Brickwork & Shingles:** Masonry effects on the chimney via repeating gradients and a shingle-textured roof created using intersecting patterns bounded by a clean `clip-path` polygon.
+*   **Dynamic Smoke:** Staggered particle animation loops using CSS keyframes to simulate smoke puffs rising into the upper atmosphere.
 
 ## 🛠️ Tech Stack
 
-- **HTML5:** Semantic structure with dedicated containers for 3D interactions.
-- **CSS3:** 3D Transforms (`perspective`, `rotate`), Keyframe Animations, Multiple Backgrounds, and `clip-path`.
+*   **HTML5:** Clean semantic architecture providing dedicated voxel anchors for advanced 3D perspective manipulation.
+*   **CSS3:** Design Tokens / Variables (`:root`), 3D Transforms (`perspective`, `rotate`), Keyframe Animations, Complex Background Matrices, and Sibling Combinators (`~`).
 
-## 💡 Key Learnings
+## 💡 Key Learnings & Project Evolution
 
-1. **3D Interactive Design:** Managing `transform-origin` to simulate realistic hinge movements.
-2. **Advanced Gradients:** Using multiple radial and linear gradients on the `body` to create a complete environment without images.
-3. **Pseudo-depth:** Implementing the "hole" technique to show a dark interior when doors or windows are opened.
+1. **Cross-Project Integration:** Successfully adapted environmental rendering logic and multi-layered gradient configurations mastered in the **City Skyline** project to create an interactive celestial ecosystem.
+2. **Advanced Light Casting:** Managing parent-child layout properties via pseudo-classes to shift structural backgrounds when structural entryways open under specific global states.
+3. **Pure CSS States:** Creating a responsive, fully interactive interface with continuous state retention without using a single line of JavaScript.
 
 ## 🔧 Setup
 
@@ -32,7 +34,7 @@ A digital artwork created entirely with semantic HTML and advanced CSS, featurin
    ```bash
    git clone https://github.com/cipdanila/css-house-painting.git
    ```
-2. Open `index.html` in your favorite browser.
+2. Open `index.html` inside your favorite browser workspace.
 
 ---
 *Created by Ciprian Danila - Pushing the boundaries of CSS.*
